@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/5.11.0/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/5.11.0/firebase-auth.js"></script>
+  <script defer src="/__/firebase/5.11.0/firebase-database.js"></script>
+  <script defer src="/__/firebase/5.11.0/firebase-firestore.js"></script>
+  <script defer src="/__/firebase/5.11.0/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/5.11.0/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #river {
+      height: 150px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #6db1db;
+    }
+
+    .c {
+      font-size: 90px;
+
+    }
+
+    .m {
+      font-size: 80px;
+    }
+
+    #north {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 150px;
+      background-color: #eddbc2;
+      margin-bottom: 20px;
+    }
+
+    #south {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 150px;
+      background-color: #eddbc2;
+      margin-top: 20px;
+    }
+
+    .boat {
+      border: solid 3px #ffff00;
+    }
+
+    .northBoat {
+      border-top: solid 3px azure;
+    }
+
+    .southBoat {
+      border-bottom: solid 3px azure;
+    }
+
+    p {
+      text-align: center;
+      color: black;
+      font-family: 'Roboto', sans-serif;
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="north"></ul>
+  <ul id="river"></ul>
+  <ul id="south"></ul>
+  <p id="message"></p>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      //
+      // firebase.auth().onAuthStateChanged(user => { });
+      // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      // firebase.messaging().requestPermission().then(() => { });
+      // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      //
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      //my code
+      firebase.firestore().doc("placeCounts/cHpzUXoRX99GfwTBJzs5")
+        .onSnapshot(snapShot => {
+          const msg = document.getElementById("message");
+          const north = document.getElementById("north");
+          const south = document.getElementById("south");
+          const river = document.getElementById("river");
+          message = snapShot.data().message;
+          msg.innerHTML = message;
+          let insertWolf = `<li class='c'>🐅</li>`;
+          let insertGoat = `<li class='m'>🐐</li>`;
+          //if (snapShot.data().erWin !== true) 
+
+          [].forEach.call(document.querySelectorAll('.m'), function (e) {
+            e.parentNode.removeChild(e);
+          });
+          [].forEach.call(document.querySelectorAll('.c'), function (e) {
+            e.parentNode.removeChild(e);
+          });
+          for (let i = 0; i < snapShot.data().cNorth; i++) {
+            north.insertAdjacentHTML("beforeend", insertWolf);
+          }
+          for (let i = 0; i < snapShot.data().cSouth; i++) {
+            south.insertAdjacentHTML("beforeend", insertWolf);
+          }
+          for (let i = 0; i < snapShot.data().cBoat; i++) {
+            river.insertAdjacentHTML("beforeend", insertWolf);
+          }
+          for (let i = 0; i < snapShot.data().mNorth; i++) {
+            north.insertAdjacentHTML("beforeend", insertGoat);
+          }
+          for (let i = 0; i < snapShot.data().mSouth; i++) {
+            south.insertAdjacentHTML("beforeend", insertGoat);
+          }
+          for (let i = 0; i < snapShot.data().mBoat; i++) {
+            river.insertAdjacentHTML("beforeend", insertGoat);
+          }
+          //}
+        });
+      //my code end
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] ===
+          'function');
+        //document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        console.error(e);
+        //document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+    });
+  </script>
+</body>
+
+</html>
