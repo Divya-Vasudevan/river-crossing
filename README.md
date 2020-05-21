@@ -16,3 +16,5 @@ The totems are to be moved from base labeled north to that labelled south. A gre
 ![Game Final Prototype in use](images/7.png)
 
 Arduino was programmed with C to respond to changes in the totems and bases which then updates Firebase, which is a mobile and web application development platform. As totems were moved around physically updates would happen in Firebase to reflect current status. The logic of the puzzle was enforced through these status updates. A website shown through a screen near the game also reflected the changes in the physical puzzle for additional feedback.
+
+![firebase + website](images/4.png)
